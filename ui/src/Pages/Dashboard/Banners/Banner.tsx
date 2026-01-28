@@ -111,15 +111,34 @@ function Banner({ data, isError, isFetching }: Props) {
             <SelectMediaFile title={title} mediaID={id}>
               <button className="play-btn">
                 {/* Play Icon SVG */}
+<<<<<<< Updated upstream
                 <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+=======
+                <svg viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+>>>>>>> Stashed changes
                 Play
               </button>
             </SelectMediaFile>
 
             {/* More Info Button */}
+<<<<<<< Updated upstream
             <button className="info-btn" onClick={() => {/* Navigate entirely to details? OR Modal? For now allow click to search/details */ }}>
               {/* Info Icon SVG */}
               <svg viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" /></svg>
+=======
+            <button
+              className="info-btn"
+              onClick={() => {
+                /* Navigate entirely to details? OR Modal? For now allow click to search/details */
+              }}
+            >
+              {/* Info Icon SVG */}
+              <svg viewBox="0 0 24 24">
+                <path d="M11 7h2v2h-2zm0 4h2v6h-2zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+              </svg>
+>>>>>>> Stashed changes
               More Info
             </button>
           </div>

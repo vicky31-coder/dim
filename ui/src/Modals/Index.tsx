@@ -34,7 +34,13 @@ const ModalBox = (props: Props) => {
   return (
     <div className="modalBoxContainer">
       {props.activatingComponent &&
+<<<<<<< Updated upstream
         cloneElement(props.activatingComponent as any, { onClick: () => open() })}
+=======
+        cloneElement(props.activatingComponent as any, {
+          onClick: () => open(),
+        })}
+>>>>>>> Stashed changes
       <Modal
         isOpen={visible}
         className="modalBox"
