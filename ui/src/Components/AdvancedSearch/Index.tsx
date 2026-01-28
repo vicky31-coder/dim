@@ -73,11 +73,11 @@ export const AdvancedSearch = (props: Props) => {
   } = suggestionsState;
 
   const onInput = useCallback(
-    (e) => {
+    (e: any) => {
       setValue(e.target.innerText);
       toggleSuggestionsOn();
     },
-    [setValue, toggleSuggestionsOn]
+    [toggleSuggestionsOn]
   );
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export const AdvancedSearch = (props: Props) => {
 
   // Callback attempt to parse input and append it to a un-filled tag if possible.
   const matchInput = useCallback(
-    (e) => {
+    (e: any) => {
       if (activeTags.length === 0) return;
 
       const lastTag = activeTags[activeTags.length - 1];
@@ -198,7 +198,7 @@ export const AdvancedSearch = (props: Props) => {
   }, [popTag, resetTree]);
 
   const onKeyDown = useCallback(
-    (e) => {
+    (e: any) => {
       if (e.key === "Enter") {
         // Prevent deault event handler so we dont get newlines in our div.
         e.preventDefault();
@@ -233,7 +233,6 @@ export const AdvancedSearch = (props: Props) => {
               contentEditable="true"
               ref={inputRef}
               spellCheck="false"
-              placeholder="Search..."
             />
           </div>
           <SearchIcon />

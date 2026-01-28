@@ -134,7 +134,7 @@ const MatchMedia = ({ data, refetch, mediafileSearch }: MatchMediaProps) => {
   );
 
   const onSearch = useCallback(
-    (query, params) => {
+    (query: any, params: any) => {
       if (!query || query === "") return;
 
       setSearchQuery(query);
@@ -145,7 +145,7 @@ const MatchMedia = ({ data, refetch, mediafileSearch }: MatchMediaProps) => {
   );
 
   const selectMediatype = useCallback(
-    (mediatype) => {
+    (mediatype: any) => {
       setMediatype(mediatype);
     },
     [setMediatype]

@@ -9,7 +9,7 @@ use crate::user::User;
 use crate::write_tx;
 
 pub async fn insert_user(conn: &mut crate::Transaction<'_>) -> User {
-    let invite = Login::new_invite(&mut *conn).await.unwrap();
+    let invite = Login::new_invite(&mut **conn).await.unwrap();
     let user = user::InsertableUser {
         username: "test".into(),
         password: "test".into(),
@@ -18,12 +18,12 @@ pub async fn insert_user(conn: &mut crate::Transaction<'_>) -> User {
         claimed_invite: invite,
     };
 
-    user.insert(&mut *conn).await.unwrap()
+    user.insert(&mut **conn).await.unwrap()
 }
 
 pub async fn insert_many(conn: &mut crate::Transaction<'_>, n: usize) {
     for i in 0..n {
-        let invite = Login::new_invite(&mut *conn).await.unwrap();
+        let invite = Login::new_invite(&mut **conn).await.unwrap();
         let user = user::InsertableUser {
             username: format!("test{}", i),
             password: "test".into(),
@@ -32,7 +32,7 @@ pub async fn insert_many(conn: &mut crate::Transaction<'_>, n: usize) {
             claimed_invite: invite,
         };
 
-        user.insert(&mut *conn).await.unwrap();
+        user.insert(&mut **conn).await.unwrap();
     }
 }
 

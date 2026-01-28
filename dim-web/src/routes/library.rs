@@ -231,7 +231,7 @@ pub async fn library_get_media(
         WHERE library_id = ? AND NOT media_type = "episode""#,
         id
     )
-    .fetch_all(&mut tx)
+    .fetch_all(&mut *tx)
     .await
     {
         Ok(res) => res,

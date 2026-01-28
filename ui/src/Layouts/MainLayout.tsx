@@ -1,11 +1,14 @@
 import type { PropsWithChildren } from "react";
 
-import Sidebar from "../Components/Sidebar/Index";
+import Header from "../Components/Header/Index";
+// import Sidebar from "../Components/Sidebar/Index";
 
 const MainLayout = (props: PropsWithChildren<{}>) => (
   <>
-    <Sidebar />
-    <main className="shrunk">{props.children}</main>
+    <Header />
+    {/* <Sidebar /> */}
+
+    <main className="full">{props.children}</main>
   </>
 );
 

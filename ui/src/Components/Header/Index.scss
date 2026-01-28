@@ -1,0 +1,86 @@
+@import "../../App.scss";
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 4%;
+  height: 68px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.4s;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 10%, transparent);
+
+  &.scrolled {
+    background-color: var(--primaryColor); // #141414
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    .logo {
+      a {
+        font-family: 'Roboto Bold', sans-serif;
+        font-size: 30px;
+        color: var(--accentColor); // Red
+        text-decoration: none;
+        letter-spacing: 2px;
+      }
+    }
+
+    .links {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+
+      @media (max-width: 900px) {
+        display: none; // Hide links on mobile for now
+      }
+
+      li {
+        a {
+          color: #e5e5e5;
+          font-size: 14px;
+          transition: color 0.3s;
+
+          &:hover {
+            color: #b3b3b3;
+          }
+        }
+      }
+    }
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+
+    // Override Sidebar Search styles slightly for Header
+    .search-box {
+        margin: 0;
+        
+        .search-box-wrapper {
+            background: transparent;
+            border: 1px solid #e5e5e5;
+            width: fit-content;
+            
+            input {
+                background: transparent;
+                color: white;
+                // Collapsed logic might be needed, currently keep open
+                width: 200px;
+                transition: width 0.3s;
+                
+                &:focus {
+                    width: 280px;
+                }
+            }
+        }
+    }
+  }
+}

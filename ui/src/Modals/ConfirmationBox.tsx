@@ -17,7 +17,7 @@ export const ConfirmationBox = (props: Props) => {
   const { action } = props;
 
   const confirmAction = useCallback(
-    (close) => {
+    (close: any) => {
       close();
       action();
     },
@@ -25,7 +25,7 @@ export const ConfirmationBox = (props: Props) => {
   );
 
   return (
-    <ModalBox activatingComponent={props.children}>
+    <ModalBox activatingComponent={props.children as any}>
       {(closeModal: () => void) => (
         <div className="modalConfirmation">
           <h3>{props.title}</h3>

@@ -31,7 +31,7 @@ function Field({
   useEffect(() => setErr(""), [setErr, value]);
 
   const handleOnChange = useCallback(
-    (e) => {
+    (e: any) => {
       const newValue = e.target.value;
 
       if (type === "number") {

@@ -14,7 +14,7 @@ const Suggestion = (props: ISuggestion) => {
   const { active, name, description, onClick } = props;
 
   const suggestionClick = useCallback(
-    (event) => {
+    (event: any) => {
       // Stop propagating the event, otherwise the suggestions will get hidden.
       event.stopPropagation();
       onClick(name);
@@ -77,7 +77,7 @@ export const Suggestions = ({ onClick }: ISuggestions) => {
   }, [currentIndex, setCurrentIndex, availableOptions]);
 
   const onKeyDown = useCallback(
-    (e) => {
+    (e: any) => {
       if (e.key === "ArrowDown") selectNext();
       if (e.key === "ArrowUp") selectPrev();
     },

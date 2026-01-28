@@ -30,7 +30,7 @@ function ProfileImage(props: Props) {
   }, [currentSrc, props.src]);
 
   const swapSrc = useCallback(
-    (e) => {
+    (e: any) => {
       if (e.animationName !== "onHideProfileImage") return;
 
       setErr(false);

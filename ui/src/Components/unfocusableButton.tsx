@@ -12,7 +12,7 @@ export function UnfocusableButton(props: ButtonProps) {
   const { onClick, children, className } = props;
 
   const callback = useCallback(
-    (e) => {
+    (e: any) => {
       onClick();
       e.target.blur();
     },

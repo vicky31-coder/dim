@@ -19,7 +19,7 @@ function Banners() {
   >(null);
 
   const handleWS = useCallback(
-    (e) => {
+    (e: any) => {
       const { type } = JSON.parse(e.data);
 
       if (items && items.length >= 3) return;
@@ -56,7 +56,7 @@ function Banners() {
   }, [activeIndex, items]);
 
   const toggle = useCallback(
-    (e) => {
+    (e: any) => {
       if (currentTimeoutID) {
         clearTimeout(currentTimeoutID);
       }

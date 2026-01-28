@@ -2,7 +2,7 @@ use aes_gcm::aead::generic_array::GenericArray;
 use aes_gcm::aead::Aead;
 use aes_gcm::AeadInPlace;
 use aes_gcm::Aes256Gcm;
-use aes_gcm::NewAead;
+use aes_gcm::KeyInit;
 
 use displaydoc::Display;
 use once_cell::sync::OnceCell;

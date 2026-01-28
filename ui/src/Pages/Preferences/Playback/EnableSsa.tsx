@@ -12,7 +12,7 @@ function EnableSsa() {
   }, [enableSsa]);
 
   const handleToggle = useCallback(
-    (state) => {
+    (state: any) => {
       setEnableSsa(state);
     },
     [setEnableSsa]

@@ -132,7 +132,7 @@ pub async fn get_all_invites(
                 WHERE invites.id NOT IN (SELECT users.claimed_invite FROM users)
                 ORDER BY created ASC"#
         )
-        .fetch_all(&mut tx)
+        .fetch_all(&mut *tx)
         .await
         .unwrap_or_default();
 
@@ -143,7 +143,7 @@ pub async fn get_all_invites(
             FROM  invites
             INNER JOIN users ON users.claimed_invite = invites.id"#
             )
-            .fetch_all(&mut tx)
+            .fetch_all(&mut *tx)
             .await
             .unwrap_or_default(),
         );

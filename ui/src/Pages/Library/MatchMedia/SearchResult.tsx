@@ -42,7 +42,7 @@ export const SearchResult = ({
   }, [trunLen, setTrunLen, descriptionLen]);
 
   const toggleCard = useCallback(
-    (e) => {
+    (e: any) => {
       // Because we have various buttons nested inside a result card (which itself is a big button)
       // we want to detect when we clicked on a child and ignore the click on the parent.
       if (e.target.closest(".description-toggle, .button")) return;

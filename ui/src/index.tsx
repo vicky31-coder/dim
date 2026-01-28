@@ -1,10 +1,13 @@
+import { createRoot } from 'react-dom/client';
 import { StrictMode } from "react";
-import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
+
+const container = document.getElementById("root");
+const root = createRoot(container!);
 
 const app = (
   <StrictMode>
@@ -14,6 +17,6 @@ const app = (
   </StrictMode>
 );
 
-ReactDOM.render(app, document.getElementById("root"));
+root.render(app);
 
 reportWebVitals();

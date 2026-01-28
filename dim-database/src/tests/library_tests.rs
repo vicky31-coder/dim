@@ -14,7 +14,7 @@ pub async fn create_test_library(conn: &mut crate::Transaction<'_>) -> i64 {
     };
 
     _LIB.fetch_add(1, Ordering::SeqCst);
-    lib.insert(&mut *conn).await.unwrap()
+    lib.insert(&mut **conn).await.unwrap()
 }
 
 #[tokio::test(flavor = "multi_thread")]

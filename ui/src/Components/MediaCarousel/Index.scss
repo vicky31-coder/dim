@@ -1,0 +1,75 @@
+.media-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    // Ensure buttons are absolute relative to this
+
+    &:hover {
+        .nav-btn {
+            opacity: 1;
+        }
+    }
+
+    .nav-btn {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 4%; // Netflix style width
+        background: rgba(0, 0, 0, 0.5);
+        border: none;
+        color: white;
+        z-index: 10;
+        cursor: pointer;
+        opacity: 0; // Hide by default
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        // Scale SVG
+        svg {
+            width: 2em;
+            height: 2em;
+            transition: transform 0.2s;
+        }
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.7);
+
+            svg {
+                transform: scale(1.2);
+            }
+        }
+
+        &.left {
+            left: 0;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        &.right {
+            right: 0;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+    }
+
+    .media-carousel {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        overflow-x: scroll;
+        scroll-behavior: smooth;
+        padding: 20px 0; // some padding for hover effect on cards
+        scrollbar-width: none; // Firefox
+
+        &::-webkit-scrollbar {
+            display: none; // Chrome
+        }
+
+        // Cards inside need to have fixed width or min-width
+        // Currently Card uses standard styles, we might need to override
+        // .card {
+        //     flex-shrink: 0;
+        // }
+    }
+}

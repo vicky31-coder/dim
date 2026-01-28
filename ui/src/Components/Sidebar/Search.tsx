@@ -15,7 +15,7 @@ function Search() {
   const [query, setQuery] = useState<string | null>(null);
   const [showResults, setShowResults] = useState(false);
 
-  const handleClick = useCallback((e) => {
+  const handleClick = useCallback((e: any) => {
     if (searchBox.current) {
       if (searchBox.current.contains(e.target)) {
         setShowResults(true);
@@ -33,13 +33,13 @@ function Search() {
     };
   }, [handleClick]);
 
-  const handleOnChange = useCallback((e) => {
+  const handleOnChange = useCallback((e: any) => {
     setQuery(e.target.value);
     setShowResults(e.target.value.length > 1);
   }, []);
 
   const onKeyDown = useCallback(
-    (e) => {
+    (e: any) => {
       if (query && query.length > 1 && e.keyCode === 13) {
         history.push({
           pathname: "/search",

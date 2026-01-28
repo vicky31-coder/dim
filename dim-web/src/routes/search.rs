@@ -109,7 +109,7 @@ async fn search_by_name(
         query,
         limit
     )
-    .fetch_all(conn)
+    .fetch_all(&mut **conn)
     .await
     .map_err(DatabaseError::from)?;
 
@@ -139,7 +139,7 @@ async fn search_by_genre(
                 "#,
         genre_id,
     )
-    .fetch_all(conn)
+    .fetch_all(&mut **conn)
     .await
     .map_err(DatabaseError::from)?;
 
@@ -168,7 +168,7 @@ async fn search_by_release_year(
                 "#,
         year,
     )
-    .fetch_all(conn)
+    .fetch_all(&mut **conn)
     .await
     .map_err(DatabaseError::from)?;
 

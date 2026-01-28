@@ -15,7 +15,7 @@ export const SimpleSearch = ({ placeholder, onChange }: SimpleSearchProps) => {
   }, [value, onChange]);
 
   const changeValue = useCallback(
-    (e) => {
+    (e: any) => {
       setValue(e?.target?.value || "");
     },
     [setValue]

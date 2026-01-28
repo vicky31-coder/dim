@@ -189,7 +189,7 @@ pub async fn start_webserver(
     tokio::spawn(event_repeater.into_future());
 
     async fn ws_handler(
-        ws: axum::extract::WebSocketUpgrade,
+        ws: axum::extract::ws::WebSocketUpgrade,
         ConnectInfo(remote_address): ConnectInfo<SocketAddr>,
         State(AppState {
             conn, socket_tx, ..
@@ -284,8 +284,11 @@ pub async fn start_webserver(
 
     tracing::info!(%address, "webserver is listening");
 
-    let web_fut = axum::Server::bind(&address)
-        .serve(router.into_make_service_with_connect_info::<SocketAddr>());
+    let listener = tokio::net::TcpListener::bind(&address).await.unwrap();
+    let web_fut = axum::serve(
+        listener,
+        router.into_make_service_with_connect_info::<SocketAddr>(),
+    );
 
     tokio::select! {
         _ = web_fut => {},

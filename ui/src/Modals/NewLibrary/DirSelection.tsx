@@ -23,7 +23,7 @@ function DirSelection(props: Props) {
   const { data: items, error, isFetching } = useGetDirectoriesQuery(current);
 
   const selectFolder = useCallback(
-    (path) => {
+    (path: string) => {
       const alreadySelected = selectedFolders.includes(path);
 
       if (alreadySelected) {
@@ -63,7 +63,7 @@ function DirSelection(props: Props) {
   }, [setSelectedFolders]);
 
   const select = useCallback(
-    (path) => {
+    (path: string) => {
       const history = [...forwardHistory];
 
       // This truncates our forward history till we get to the item thats equivalent to our current path.
@@ -132,9 +132,8 @@ function DirSelection(props: Props) {
                 {dir.replace(current, "").replace("/", "")}
                 <span className="selectedInsideCount">
                   {count
-                    ? ` ${count} ${
-                        count === 1 ? "folder" : "folders"
-                      } selected inside`
+                    ? ` ${count} ${count === 1 ? "folder" : "folders"
+                    } selected inside`
                     : ""}
                 </span>
               </p>

@@ -4,10 +4,10 @@ use dim_database::DbConnection;
 
 use crate::DimErrorWrapper;
 
-pub async fn verify_cookie_token<B>(
+pub async fn verify_cookie_token(
     State(conn): State<DbConnection>,
-    mut req: axum::http::Request<B>,
-    next: axum::middleware::Next<B>,
+    mut req: axum::extract::Request,
+    next: axum::middleware::Next,
 ) -> Result<axum::response::Response, DimErrorWrapper> {
     match req.headers().get(axum::http::header::AUTHORIZATION) {
         Some(token) => {

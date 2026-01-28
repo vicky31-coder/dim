@@ -92,28 +92,39 @@ function Banner({ data, isError, isFetching }: Props) {
     return (
       <div className="banner">
         <Image src={backdrop} />
-        <div className="extras">
-          <Link to={`/search?year=${year}`}>{year}</Link>
-          {genres.length > 0 && <CircleIcon />}
-          {genres.map((genre, i) => (
-            <Link to={`/search?genre=${encodeURIComponent(genre)}`} key={i}>
-              {genre}
-            </Link>
-          ))}
-        </div>
+
         <div className="info">
           <h1>{title}</h1>
+          <div className="meta-row">
+            <span>{year}</span>
+            {genres.length > 0 && <span>•</span>}
+            <span>{genres[0]}</span>
+            {/* Add duration/season info if needed */}
+          </div>
+
           <p className="description">
-            <TruncText content={synopsis} max={35} />
+            <TruncText content={synopsis} max={150} />
           </p>
-          <SelectMediaFile title={title} mediaID={id}>
-            <SelectMediaFilePlayButton
-              progress={delta}
-              seasonep={{ season, episode }}
-            />
-          </SelectMediaFile>
+
+          <div className="buttons">
+            {/* Play Button */}
+            <SelectMediaFile title={title} mediaID={id}>
+              <button className="play-btn">
+                {/* Play Icon SVG */}
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                Play
+              </button>
+            </SelectMediaFile>
+
+            {/* More Info Button */}
+            <button className="info-btn" onClick={() => {/* Navigate entirely to details? OR Modal? For now allow click to search/details */ }}>
+              {/* Info Icon SVG */}
+              <svg viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" /></svg>
+              More Info
+            </button>
+          </div>
         </div>
-        <ProgressBar data={progressBarData} />
+        {/* <ProgressBar data={progressBarData} /> -- Hiding progress bar in Hero for cleaner look */}
       </div>
     );
   }

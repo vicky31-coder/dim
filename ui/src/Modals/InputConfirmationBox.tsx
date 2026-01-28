@@ -25,7 +25,7 @@ export const InputConfirmationBox = (props: Props) => {
   const { action } = props;
 
   const confirmAction = useCallback(
-    async (close) => {
+    async (close: any) => {
       const valid = await action();
 
       if (valid) {

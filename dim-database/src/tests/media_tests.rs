@@ -19,7 +19,7 @@ pub async fn insert_media(conn: &mut crate::Transaction<'_>) -> i64 {
         media_type: library::MediaType::Movie,
     };
 
-    media.insert(&mut *conn).await.unwrap()
+    media.insert(&mut **conn).await.unwrap()
 }
 
 pub async fn insert_many(conn: &mut crate::Transaction<'_>, n: usize) {
@@ -36,7 +36,7 @@ pub async fn insert_many(conn: &mut crate::Transaction<'_>, n: usize) {
             media_type: library::MediaType::Movie,
         };
 
-        media.insert(&mut *conn).await.unwrap();
+        media.insert(&mut **conn).await.unwrap();
     }
 }
 

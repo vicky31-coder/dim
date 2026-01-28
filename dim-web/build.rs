@@ -1,13 +1,38 @@
 use std::env;
 use std::error::Error;
+use std::fs;
 use std::path::Path;
 use std::process::Command;
+use std::str::FromStr;
 
-fn main() -> Result<(), Box<dyn Error>> {
-    let out_dir = env::var("CARGO_TARGET_DIR").unwrap();
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
+    let out_dir = env::var("OUT_DIR").unwrap();
 
     let db_file = format!("{out_dir}/dim_dev.db");
     println!("cargo:rustc-env=DATABASE_URL=sqlite://{db_file}");
+
+    if !Path::new(&db_file).exists() {
+        let pool = sqlx::sqlite::SqlitePoolOptions::new()
+            .connect_with(
+                sqlx::sqlite::SqliteConnectOptions::from_str(db_file.as_ref())?
+                    .create_if_missing(true),
+            )
+            .await?;
+
+        // Point to dim-database migrations
+        let migrations = Path::new("../dim-database/migrations");
+
+        // We actully need to run migrations for sqlx macros to work
+        sqlx::migrate::Migrator::new(migrations)
+            .await?
+            .run(&pool)
+            .await
+            .map_err(|e| {
+                println!("cargo:warning=Migration failed: {:?}", e);
+                e
+            })?;
+    }
 
     let git_tag_output = Command::new("git")
         .args(&["describe", "--abbrev=0"])
@@ -32,6 +57,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     println!("cargo:rerun-if-changed=ui/build");
     println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-changed=../dim-database/migrations");
 
     Ok(())
 }

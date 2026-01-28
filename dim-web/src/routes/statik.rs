@@ -1,10 +1,9 @@
 use crate::AppState;
-use axum::body;
-use axum::body::Full;
+
+use axum::extract::OriginalUri;
 use axum::extract::Path;
 use axum::extract::Query;
 use axum::extract::State;
-use axum::http::Uri;
 use axum::response::Html;
 use axum::response::IntoResponse;
 use axum::response::Response;
@@ -115,6 +114,8 @@ pub async fn get_image(
         _ => None,
     };
 
+    // ...
+
     if let Some(data) = image {
         let mut resp = Response::builder()
             .status(StatusCode::OK)
@@ -124,13 +125,13 @@ pub async fn get_image(
             resp = resp.header("X-IMAGE-ACCENTS", accents);
         }
 
-        return Ok(resp.body(body::boxed(Full::from(data))).unwrap());
+        return Ok(resp.body(axum::body::Body::from(data)).unwrap());
     }
 
     Err(dim_core::errors::DimError::NotFoundError.into())
 }
 
-pub async fn dist_static(uri: Uri) -> Result<impl IntoResponse, DimErrorWrapper> {
+pub async fn dist_static(uri: OriginalUri) -> Result<impl IntoResponse, DimErrorWrapper> {
     let path = PathBuf::from(uri.path());
     if let Some(y) = Asset::get(path.to_str().unwrap()) {
         let mime = match path.extension().and_then(|x| x.to_str()) {
@@ -149,7 +150,7 @@ pub async fn dist_static(uri: Uri) -> Result<impl IntoResponse, DimErrorWrapper>
         Ok(Response::builder()
             .status(StatusCode::OK)
             .header("Content-Type", mime)
-            .body(body::boxed(Full::from(y.into_owned())))
+            .body(axum::body::Body::from(y.into_owned()))
             .unwrap())
     } else {
         Err(dim_core::errors::DimError::NotFoundError.into())

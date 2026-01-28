@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # Rust Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8080:8000" # Map to 8080 to avoid conflict with local dev
+    volumes:
+      # Mount source for live rebuild (optional)
+      - .:/app
+      - cargo-cache:/usr/local/cargo/registry
+      - target-cache:/app/target
+    environment:
+      - RUST_LOG=info
+      - DATABASE_URL=sqlite:///app/dim.db
+    networks:
+      - dim-network
+
+  # React Frontend Dev Server
+  frontend:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3001:3000" # Map to 3001 to avoid conflict with local dev
+    volumes:
+      - ./ui/src:/app/src
+      - ./ui/public:/app/public
+    environment:
+      - REACT_APP_API_URL=http://backend:8000
+      - CHOKIDAR_USEPOLLING=true
+      - WDS_SOCKET_HOST=0.0.0.0
+    depends_on:
+      - backend
+    networks:
+      - dim-network
+
+networks:
+  dim-network:
+    driver: bridge
+
+volumes:
+  cargo-cache:
+  target-cache:

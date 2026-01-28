@@ -34,7 +34,7 @@ const ModalBox = (props: Props) => {
   return (
     <div className="modalBoxContainer">
       {props.activatingComponent &&
-        cloneElement(props.activatingComponent, { onClick: () => open() })}
+        cloneElement(props.activatingComponent as any, { onClick: () => open() })}
       <Modal
         isOpen={visible}
         className="modalBox"

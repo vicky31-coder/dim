@@ -1,0 +1,51 @@
+# Backend Dockerfile for Development
+FROM rust:1.75-bookworm
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    libsqlite3-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy Cargo files first for caching
+COPY Cargo.toml Cargo.lock ./
+COPY dim/Cargo.toml ./dim/
+COPY dim-core/Cargo.toml ./dim-core/
+COPY dim-database/Cargo.toml ./dim-database/
+COPY dim-web/Cargo.toml ./dim-web/
+COPY dim-auth/Cargo.toml ./dim-auth/
+COPY dim-events/Cargo.toml ./dim-events/
+COPY dim-extern-api/Cargo.toml ./dim-extern-api/
+COPY dim-utils/Cargo.toml ./dim-utils/
+
+# Create dummy source files for dependency caching
+RUN mkdir -p dim/src dim-core/src dim-database/src dim-web/src dim-auth/src dim-events/src dim-extern-api/src dim-utils/src \
+    && echo "fn main() {}" > dim/src/main.rs \
+    && echo "" > dim-core/src/lib.rs \
+    && echo "" > dim-database/src/lib.rs \
+    && echo "" > dim-web/src/lib.rs \
+    && echo "" > dim-auth/src/lib.rs \
+    && echo "" > dim-events/src/lib.rs \
+    && echo "" > dim-extern-api/src/lib.rs \
+    && echo "" > dim-utils/src/lib.rs
+
+# Build dependencies only (cached layer)
+RUN cargo build --release 2>/dev/null || true
+
+# Copy actual source code
+COPY . .
+
+# Create utils symlinks for ffmpeg
+RUN mkdir -p utils \
+    && ln -sf /usr/bin/ffmpeg utils/ffmpeg \
+    && ln -sf /usr/bin/ffprobe utils/ffprobe
+
+# Build the application
+RUN cargo build
+
+EXPOSE 8000
+
+CMD ["cargo", "run"]

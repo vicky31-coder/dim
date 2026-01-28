@@ -12,7 +12,7 @@ pub async fn insert_mediafile(conn: &mut crate::Transaction<'_>) -> i64 {
         ..Default::default()
     };
 
-    mfile.insert(&mut *conn).await.unwrap()
+    mfile.insert(&mut **conn).await.unwrap()
 }
 
 pub async fn insert_mediafile_with_mediaid(
@@ -27,7 +27,7 @@ pub async fn insert_mediafile_with_mediaid(
         ..Default::default()
     };
 
-    mfile.insert(&mut *conn).await.unwrap()
+    mfile.insert(&mut **conn).await.unwrap()
 }
 
 pub async fn insert_many_mediafile(conn: &mut crate::Transaction<'_>, n: usize) {
@@ -39,7 +39,7 @@ pub async fn insert_many_mediafile(conn: &mut crate::Transaction<'_>, n: usize) 
             ..Default::default()
         };
 
-        mfile.insert(&mut *conn).await.unwrap();
+        mfile.insert(&mut **conn).await.unwrap();
     }
 }
 

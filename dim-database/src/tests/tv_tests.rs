@@ -14,6 +14,6 @@ pub async fn insert_tv(conn: &mut crate::Transaction<'_>) -> i64 {
         media_type: library::MediaType::Tv,
     };
 
-    let id = media.insert(&mut *conn).await.unwrap();
+    let id = media.insert(&mut **conn).await.unwrap();
     id
 }

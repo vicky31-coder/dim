@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 
 import { useGetCardsQuery } from "../../../api/v1/dashboard";
 import useWebSocket from "../../../hooks/ws";
 import Card from "../../../Components/Card/Index";
 import GhostCards from "./Ghost";
+import MediaCarousel from "../../../Components/MediaCarousel/Index";
 
 import "./Index.scss";
 
@@ -20,7 +21,7 @@ function CardList() {
   const ws = useWebSocket();
 
   const handleWS = useCallback(
-    (e) => {
+    (e: any) => {
       const { type } = JSON.parse(e.data);
 
       if (type === "EventNewCard") {
@@ -60,15 +61,19 @@ function CardList() {
 
     const itemKeys = Object.keys(items);
 
+
+
     if (itemKeys.length > 0 && !emptyDashboard) {
       const sections = Object.entries(items).reduce(
         (memo, [section, sectionItems]) => {
           memo[section] = sectionItems.map((card, i) => (
-            <Card key={i} data={card} />
+            <div key={i} style={{ minWidth: "220px", width: "220px" }}>
+              <Card data={card} />
+            </div>
           ));
           return memo;
         },
-        {} as Record<string, JSX.Element[]>
+        {} as Record<string, React.ReactElement[]>
       );
 
       card_list = Object.entries(sections).map(
@@ -86,7 +91,7 @@ function CardList() {
                 <p className="sectionDesc">No media has been found</p>
               ))}
             {sectionElements.length > 0 && (
-              <div className="cards">{sectionElements}</div>
+              <MediaCarousel>{sectionElements}</MediaCarousel>
             )}
           </section>
         )

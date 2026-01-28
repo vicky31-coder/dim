@@ -38,7 +38,7 @@ function WS(props: React.PropsWithChildren<{}>) {
   }, [dispatch, intervalID]);
 
   const handleClose = useCallback(
-    (e) => {
+    (e: any) => {
       if (e.wasClean) return;
 
       dispatch(

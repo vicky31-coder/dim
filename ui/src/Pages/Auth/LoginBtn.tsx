@@ -54,7 +54,7 @@ function LoginBtn(props: Props) {
   ]);
 
   const onKeyDown = useCallback(
-    (e) => {
+    (e: any) => {
       if (e.keyCode === 13) {
         authorize();
       }

@@ -8,7 +8,7 @@ use super::library_tests::create_test_library;
 
 pub async fn insert_genre(conn: &mut crate::Transaction<'_>, name: String) -> i64 {
     genre::InsertableGenre { name }
-        .insert(&mut *conn)
+        .insert(&mut **conn)
         .await
         .unwrap()
 }
