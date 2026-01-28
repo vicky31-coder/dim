@@ -132,8 +132,9 @@ function DirSelection(props: Props) {
                 {dir.replace(current, "").replace("/", "")}
                 <span className="selectedInsideCount">
                   {count
-                    ? ` ${count} ${count === 1 ? "folder" : "folders"
-                    } selected inside`
+                    ? ` ${count} ${
+                        count === 1 ? "folder" : "folders"
+                      } selected inside`
                     : ""}
                 </span>
               </p>
